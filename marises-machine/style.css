@@ -5,7 +5,7 @@ body{
 }
 
 .container{
-    background-color: #173F73;
+    background-color: #001F3F;
     display: flex;
     align-items: center;
     height: 90vh;
@@ -24,7 +24,7 @@ body{
     border-radius: 1rem;
     padding: 2rem;
     gap: 10px;
-    border: 3px solid#0455BF;
+    border: 3px solid #0455BF;
     background-color: #B8D1FA;
 
 }
@@ -70,16 +70,17 @@ body{
 }
 
 .btn_calc:active {
-    background-color: #0455BF;
+    background-color: #EAD8B1;
     border:2px solid #011126;
-    color: white;
+    color: #001F3F;
 }
 
 header{
     display: flex;
     justify-content: center;
-    background-color:black;
-    color: aliceblue;
+    background-color: #EAD8B1;
+    color: #001F3F;
+    border-bottom: 2px solid #B8D1FA;
 }
 
 

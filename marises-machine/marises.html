@@ -36,10 +36,10 @@
         <div class="left">
             <h2>Qual para qual unidade deseja converter?</h2>
             <select class="select" id="select_opcao_output">
-                <option class="option" value="10">Decimal</option>
-                <option class="option" value="2" >Binário</option>
-                <option class="option" value="8" >Octal</option>
-                <option class="option" value="16">Hexadecimal</option>
+                <option class="option" value="2"  id="select_final_2">Binário</option>
+                <option class="option" value="10" id="select_final_10" style="display:none;">Decimal</option>
+                <option class="option" value="8"  id="select_final_8">Octal</option>
+                <option class="option" value="16" id="select_final_16">Hexadecimal</option>
             </select>
 
             <input class="input" type="text" id="output" placeholder="Resultado:" readonly>
@@ -50,12 +50,21 @@
 
 
 <script>
+    var ultimaBaseInicial = 10;
      function mudaTipo(){
         const baseInicial = Number(select_opcao_input.value);
         if(baseInicial == 16){
             input_numero.type = 'text'
-        }else{
+            select_final_16.style = 'display: none;'
+        }else {
             input_numero.type = 'number'
+        }
+
+        if(baseInicial != ultimaBaseInicial){
+            select_opcao_output.value = ultimaBaseInicial
+            document.getElementById(`select_final_${baseInicial}`).style = 'display: none;'
+            document.getElementById(`select_final_${ultimaBaseInicial}`).style = 'display: default;'
+            ultimaBaseInicial = baseInicial;
         }
     }
 
@@ -82,7 +91,5 @@
 
     function converter(numero, baseInicial, baseFinal){
         return parseInt(numero, baseInicial).toString(baseFinal)
-
-
     }
 </script>
