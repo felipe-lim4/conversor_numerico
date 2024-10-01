@@ -1,95 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <header>
-        <h1 class="title">Conversor de Unidades</h1>
-    </header>
-    <div class="container">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<link rel="stylesheet" href="style.css" />
+	</head>
+	<body>
+		<header>
+			<h1 class="title">Conversor de Unidades</h1>
+		</header>
+		<div class="container">
+			<div class="leftMaior">
+				<div class="left">
+					<h2>Em qual unidade está o numero inserido?</h2>
 
+					<select
+						class="select"
+						id="select_opcao_input"
+						onchange="mudaTipo()"
+					>
+						<option class="option" value="10">Decimal</option>
+						<option class="option" value="2">Binário</option>
+						<option class="option" value="8">Octal</option>
+						<option class="option" value="16">Hexadecimal</option>
+					</select>
 
-        <div class="left">
-            <h2>Em qual unidade está o numero inserido?</h2>
+					<input
+						class="input"
+						type="number"
+						id="input_numero"
+						placeholder="Insira o valor que deseja converter:"
+					/>
+					<h2>Para qual unidade deseja converter?</h2>
+					<select class="select" id="select_opcao_output">
+						<option class="option" value="2" id="select_final_2">
+							Binário
+						</option>
+						<option
+							class="option"
+							value="10"
+							id="select_final_10"
+							style="display: none"
+						>
+							Decimal
+						</option>
+						<option class="option" value="8" id="select_final_8">
+							Octal
+						</option>
+						<option class="option" value="16" id="select_final_16">
+							Hexadecimal
+						</option>
+					</select>
+					<button class="btn_calc" onclick="conversor()">
+						Calcular
+					</button>
+				</div>
+			</div>
 
-            <select  class="select"  id="select_opcao_input" onchange="mudaTipo()">
-                <option class="option" value="10">Decimal</option>
-                <option class="option" value="2">Binário</option>
-                <option class="option" value="8">Octal</option>
-                <option class="option" value="16">Hexadecimal</option>
-            </select>
-            <input class="input" type="number" id="input_numero" placeholder="Insira o valor que deseja converter:">
-
-        </div>
-
-
-        <div class="mid">
-
-            <button class="btn_calc" onclick="conversor()">Calcular</button>
-        </div>
-
-
-        <div class="left">
-            <h2>Qual para qual unidade deseja converter?</h2>
-            <select class="select" id="select_opcao_output">
-                <option class="option" value="2"  id="select_final_2">Binário</option>
-                <option class="option" value="10" id="select_final_10" style="display:none;">Decimal</option>
-                <option class="option" value="8"  id="select_final_8">Octal</option>
-                <option class="option" value="16" id="select_final_16">Hexadecimal</option>
-            </select>
-
-            <input class="input" type="text" id="output" placeholder="Resultado:" readonly>
-        </div>
-    </div>
-</body>
+			<div class="right">
+				<h2>Resultado:</h2>
+				<input class="input" type="text" id="output" readonly />
+			</div>
+		</div>
+	</body>
 </html>
 
-
 <script>
-    var ultimaBaseInicial = 10;
-     function mudaTipo(){
-        const baseInicial = Number(select_opcao_input.value);
-        if(baseInicial == 16){
-            input_numero.type = 'text'
-            select_final_16.style = 'display: none;'
-        }else {
-            input_numero.type = 'number'
-        }
+	var ultimaBaseInicial = 10;
+	function mudaTipo() {
+		const baseInicial = Number(select_opcao_input.value);
+		if (baseInicial == 16) {
+			input_numero.type = 'text';
+			select_final_16.style = 'display: none;';
+		} else {
+			input_numero.type = 'number';
+		}
 
-        if(baseInicial != ultimaBaseInicial){
-            select_opcao_output.value = ultimaBaseInicial
-            document.getElementById(`select_final_${baseInicial}`).style = 'display: none;'
-            document.getElementById(`select_final_${ultimaBaseInicial}`).style = 'display: default;'
-            ultimaBaseInicial = baseInicial;
-        }
-    }
+		if (baseInicial != ultimaBaseInicial) {
+			var ultimaBaseInicial = select_opcao_output.value;
+			document.getElementById(`select_final_${baseInicial}`).style =
+				'display: none;';
+			document.getElementById(`select_final_${ultimaBaseInicial}`).style =
+				'display: default;';
+			ultimaBaseInicial = baseInicial;
+		}
+	}
 
-    function conversor(){
-        const baseInicial = Number(select_opcao_input.value);
-        var entrada
-        if(input_numero.type == 'text'){
-            entrada = input_numero.value
-        }else{
-            entrada = Number(input_numero.value);
-        }
-        const baseFinal = Number(select_opcao_output.value);
+	function conversor() {
+		const baseInicial = Number(select_opcao_input.value);
+		var entrada;
 
-        resultado = converter(entrada, baseInicial, baseFinal)
+		if (input_numero.type == 'text') {
+			entrada = input_numero.value;
+		} else {
+			entrada = Number(input_numero.value);
+		}
+		const baseFinal = Number(select_opcao_output.value);
 
-        console.log(resultado);
-        if(resultado == 'NaN'){
-            resultado = 'insira um valor valido!'
-        }
-        output.value = resultado;
+		resultado = converter(entrada, baseInicial, baseFinal);
 
-    }
+		console.log(resultado);
+		if (resultado == 'NaN') {
+			resultado = 'insira um valor valido!';
+		}
+		output.value = resultado;
+	}
 
-
-    function converter(numero, baseInicial, baseFinal){
-        return parseInt(numero, baseInicial).toString(baseFinal)
-    }
+	function converter(numero, baseInicial, baseFinal) {
+		return parseInt(numero, baseInicial).toString(baseFinal);
+	}
 </script>
